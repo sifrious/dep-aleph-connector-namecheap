@@ -146,6 +146,14 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
 
         $batch = max(1, (int) $request->parameter('batch', self::DEFAULT_BATCH));
         $includeRecords = (bool) $request->parameter('include_records', true);
+        /*
+         * Funes has no list API, so a host that needs a fleet view has no
+         * way to read back what a run accepted. Until it does, a run can be
+         * asked to hand its normalized payloads back to the caller. Opt-in,
+         * because the default contract is that acceptance is the output.
+         */
+        $returnObservations = (bool) $request->parameter('return_observations', false);
+        $observations = ['domains' => [], 'records' => []];
         $installation = (string) $request->parameter('installation', 'unconfigured');
         $capturedAt = Date::now()->toDateTimeImmutable();
 
@@ -169,6 +177,10 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
             }
 
             $accepted++;
+
+            if ($returnObservations) {
+                $observations['domains'][] = $normalized;
+            }
 
             if (! $includeRecords || $normalized['uses_registrar_dns'] === false) {
                 continue;
@@ -207,6 +219,10 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
                 }
 
                 $accepted++;
+
+                if ($returnObservations) {
+                    $observations['records'][] = $normalizedRecord;
+                }
             }
         }
 
@@ -217,6 +233,10 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
             'delegated_elsewhere' => $delegatedElsewhere,
             'normalizer_version' => Normalizer::VERSION,
         ];
+
+        if ($returnObservations) {
+            $metadata['observations'] = $observations;
+        }
 
         return $nextOffset < count($domains)
             ? OperationResult::partial($accepted, (string) $nextOffset, $metadata)
