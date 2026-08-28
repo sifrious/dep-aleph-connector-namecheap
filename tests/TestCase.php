@@ -18,6 +18,8 @@ abstract class TestCase extends Orchestra
 
     protected function defineEnvironment($app): void
     {
+        $app['config']->set('app.key', str_repeat('a', 32));
+        $app['config']->set('app.cipher', 'AES-256-CBC');
         $app['config']->set('cache.default', 'array');
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [

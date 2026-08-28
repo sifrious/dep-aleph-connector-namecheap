@@ -33,10 +33,20 @@
     "repositories": [
         {
             "type": "path",
+            "url": "../Funes",
+            "options": { "symlink": true }
+        },
+        {
+            "type": "path",
             "url": "../Aleph",
             "options": { "symlink": true }
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
 }
