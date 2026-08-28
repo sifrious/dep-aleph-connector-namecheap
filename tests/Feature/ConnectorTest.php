@@ -187,3 +187,29 @@ it('produces the same accepted count when the same account is read twice', funct
         ->and($second->successful)->toBeTrue()
         ->and($second->records)->toBe($first->records);
 });
+
+it('runs the whole inventory from fixtures with no network and no credentials', function (): void {
+    Http::fake();
+
+    $connector = new NamecheapConnector(
+        app(Sifrious\Aleph\Envelope\EnvelopeSubmitter::class),
+        new Normalizer,
+        null,
+        Sifrious\NamecheapConnector\Testing\FixtureRegistrarReader::fixtureAccount(),
+    );
+
+    $result = $connector->backfill(inventoryRequest());
+
+    expect($result->successful)->toBeTrue()
+        ->and($result->complete)->toBeTrue()
+        ->and($result->records)->toBe(11)
+        /*
+         * mary.is reports IsOurDNS="false" in the domain list, so its host
+         * records are never requested and it never reaches the delegation
+         * error. Skipping on the flag is the cheaper path and the reason
+         * delegated_elsewhere is empty here rather than naming it.
+         */
+        ->and($result->metadata['delegated_elsewhere'])->toBe([]);
+
+    Http::assertNothingSent();
+});

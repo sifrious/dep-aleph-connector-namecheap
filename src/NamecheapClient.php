@@ -7,6 +7,7 @@ namespace Sifrious\NamecheapConnector;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use SimpleXMLElement;
+use Sifrious\NamecheapConnector\Contracts\RegistrarReader;
 use Sifrious\NamecheapConnector\Contracts\Sleeper;
 use Throwable;
 
@@ -19,7 +20,7 @@ use Throwable;
  * changes account or domain state, and the command allow-list below is the
  * enforcement, not a convention.
  */
-final class NamecheapClient
+final class NamecheapClient implements RegistrarReader
 {
     /**
      * Commands this connector may issue. A command not on this list is refused

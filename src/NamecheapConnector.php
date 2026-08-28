@@ -23,6 +23,7 @@ use Sifrious\Aleph\Envelope\EnvelopeSubmitter;
 use Sifrious\Aleph\Envelope\ExtensionMetadata;
 use Sifrious\Aleph\Envelope\ObservationEnvelope;
 use Sifrious\Aleph\Envelope\Provenance;
+use Sifrious\NamecheapConnector\Contracts\RegistrarReader;
 use Throwable;
 
 /**
@@ -54,7 +55,7 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
         private readonly EnvelopeSubmitter $submitter,
         private readonly Normalizer $normalizer = new Normalizer,
         private readonly ?ConnectorInstallations $installations = null,
-        private readonly ?NamecheapClient $client = null,
+        private readonly ?RegistrarReader $reader = null,
     ) {}
 
     public function id(): string
@@ -131,7 +132,7 @@ final class NamecheapConnector implements Backfills, ChecksHealth, Connector, Di
     {
         try {
             $credentials = $this->credentials($request);
-            $client = $this->client ?? new NamecheapClient($credentials);
+            $client = $this->reader ?? new NamecheapClient($credentials);
             $domains = $client->domains();
         } catch (NamecheapError $error) {
             return OperationResult::failed($error->getMessage(), [
