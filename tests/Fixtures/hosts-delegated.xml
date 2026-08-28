@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse Status="OK" xmlns="">
+  <Errors />
+  <RequestedCommand>namecheap.domains.dns.getHosts</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.dns.getHosts">
+    <DomainDNSGetHostsResult Domain="mary.is" EmailType="MX" IsUsingOurDNS="false" />
+  </CommandResponse>
+</ApiResponse>

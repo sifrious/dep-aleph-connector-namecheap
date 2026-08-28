@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse Status="ERROR" xmlns="">
+  <Errors>
+    <Error Number="1011150">Invalid request IP</Error>
+  </Errors>
+  <RequestedCommand>namecheap.domains.getList</RequestedCommand>
+</ApiResponse>

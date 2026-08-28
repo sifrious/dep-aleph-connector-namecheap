@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse Status="OK" xmlns="">
+  <Errors />
+  <RequestedCommand>namecheap.domains.getList</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.getList">
+    <DomainGetListResult>
+      <Domain ID="103" Name="MARY.IS" User="operator" Created="02/09/2024" Expires="02/09/2027" IsExpired="false" IsLocked="true" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="false" />
+    </DomainGetListResult>
+    <Paging>
+      <TotalItems>3</TotalItems>
+      <CurrentPage>2</CurrentPage>
+      <PageSize>2</PageSize>
+    </Paging>
+  </CommandResponse>
+</ApiResponse>
