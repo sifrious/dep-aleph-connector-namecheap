@@ -2,7 +2,7 @@
     "name": "sifrious/aleph-connector-namecheap",
     "description": "Read-only Namecheap registrar connector for Aleph.",
     "type": "library",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": "^8.4.1",
         "ext-simplexml": "*",

@@ -1,5 +1,9 @@
 # Aleph connector — Namecheap
 
+> **License:** Copyright © 2026 Sifrious. All rights reserved. This is
+> publicly viewable proprietary software, not open-source software. See
+> [LICENSE.md](LICENSE.md).
+
 Read-only registrar observation. This connector enumerates the domains on a Namecheap account and,
 where Namecheap is still authoritative for a zone, its host records. It emits provenance-bearing
 observation envelopes and changes nothing.
